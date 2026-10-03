@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class _PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class _PlayerMovement : MonoBehaviour
         Sprinting,
         WallDraging,
         Grounded,
+
+        OnWall,
         Airborne
     }
 
@@ -36,6 +39,9 @@ public class _PlayerMovement : MonoBehaviour
 
     public Rigidbody rb;
     public float moveSpeed;
+
+    [SerializeField] float _sprintSpeed;
+    [SerializeField] float _defaultSpeed;
     public Vector2 _moveDirection;
 
     [Header("Player Dash Variables")]
@@ -65,11 +71,13 @@ public class _PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public bool isDashing;
     public bool isLunging;
+
+    public bool isWallJumping;
     bool enableDoubleJump = true;
 
     [Header("Player Jump Variables")]
-    int jumpCount = 0;
-    int maxJump = 2;
+    public int jumpCount = 0;
+    public int maxJump = 2;
     public float jumpForce;
     public float airBufferTime;
 
@@ -77,13 +85,26 @@ public class _PlayerMovement : MonoBehaviour
     public float hopModifierX;
     public float hopModifierY;
     public float knockbackFallOff;
+
     
+
+    [Header("Player Wall Jump Variables")]
+    public float wallJumpEffectTime;
+    public float wallJumpCurrentTime;
+    public float wallJumpForce;
+    public float movementDamper;
+    public float movementDampTime;
+    public float defaultMovementDamper;
+    public float movementDampDuration;
+    public float defaultWallJumpForce;
+
 
     [Header("Input Actions")]
 
-    public InputActionReference move;
-    public InputActionReference jump;
-    public InputActionReference dash;
+    [SerializeField] InputActionReference move;
+    [SerializeField] InputActionReference jump;
+    [SerializeField] InputActionReference dash;
+    [SerializeField] InputActionReference sprint;
 
     //indicates respective player
     [SerializeField] PlayerInput pi;
@@ -121,7 +142,6 @@ public class _PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void FixedUpdate()
@@ -139,6 +159,10 @@ public class _PlayerMovement : MonoBehaviour
             PassEnableDash(false);
             residueSpeedX = Mathf.MoveTowards(residueSpeedX, 0, 1);
             rb.linearVelocity = new Vector2(residueSpeedX, 0) + new Vector2(_moveDirection.x * moveSpeed, rb.linearVelocity.y);
+        }
+        else if (isWallJumping)
+        {
+            WallJump();
         }
         else
         {
@@ -159,10 +183,13 @@ public class _PlayerMovement : MonoBehaviour
         move.action.Enable();
         jump.action.Enable();
         dash.action.Enable();
+        sprint.action.Enable();
         jump.action.started += Jump;
         dash.action.started += Dash;
+        sprint.action.performed += OnSprint;
         InputSystem.onDeviceChange += OnDeviceChange;
         pi.onControlsChanged += OnControlsChanged;
+       
     }
 
     private void OnDisable()
@@ -171,8 +198,10 @@ public class _PlayerMovement : MonoBehaviour
         move.action.Disable();
         jump.action.Disable();
         dash.action.Disable();
+        sprint.action.Disable();
         jump.action.started -= Jump;
         dash.action.started -= Dash;
+        sprint.action.performed -= OnSprint;
         InputSystem.onDeviceChange -= OnDeviceChange;
         pi.onControlsChanged -= OnControlsChanged;
     }
@@ -184,7 +213,22 @@ public class _PlayerMovement : MonoBehaviour
         {
             pPointer.transform.position = _moveDirection + new Vector2(transform.position.x, transform.position.y);
         }
+        else if (_moveDirection.x == 0)
+        {
+            moveSpeed = _defaultSpeed;
+        }
+    }
 
+    public void OnSprint(InputAction.CallbackContext obj)
+    {
+        if (obj.performed)
+        {
+            moveSpeed = _sprintSpeed;
+        }
+        else
+        {
+            moveSpeed = _defaultSpeed;
+        }
     }
 
     public void OnControlsChanged(PlayerInput currentInput)
@@ -218,7 +262,11 @@ public class _PlayerMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext obj)
     {
-        if (isGrounded || movementState == MovementState.WallDraging || enableDoubleJump && jumpCount < maxJump && obj.performed)
+        if (movementState == MovementState.WallDraging || movementState == MovementState.OnWall)
+        {
+            isWallJumping = true;
+        }
+        else if (isGrounded || jumpCount < maxJump)
         {
             jumpCount++;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -315,6 +363,24 @@ public class _PlayerMovement : MonoBehaviour
         residueSpeedX = knockbackVelocity.x;
     }
 
+    public void WallJump()
+    {
+        wallJumpCurrentTime += Time.fixedDeltaTime;
+        movementDampTime += Time.fixedDeltaTime;
+        rb.linearVelocity = new Vector2(normal.x * wallJumpForce + _moveDirection.x * moveSpeed * 1 / movementDamper, Mathf.Abs(rb.linearVelocity.y) + wallJumpForce / 12);
+        wallJumpForce = Mathf.Lerp(wallJumpForce, 8, wallJumpCurrentTime / wallJumpEffectTime);
+        movementDamper = Mathf.Lerp(movementDamper, 1, movementDampTime / movementDampDuration);
+        if (wallJumpCurrentTime >= wallJumpEffectTime)
+        {
+            isWallJumping = false;
+            wallJumpCurrentTime = 0;
+            movementDamper = defaultMovementDamper;
+            movementDampTime = 0;
+            movementDamper = 10;
+            wallJumpForce = defaultWallJumpForce;
+        }
+    }
+
     public void EnableKnockBack(Vector2 knockbackVelocity, float knockbackX, float knockbackFalloff, float knockbackFallOffDuration, float knockbackDuration)
     {
         knockbackTime = 0;
@@ -378,7 +444,11 @@ public class _PlayerMovement : MonoBehaviour
                 normal = contact.normal;
             }
             Debug.Log(normal);
-            if (normal.x != 0 && rb.linearVelocity.y < 0)
+            if (normal.x != 0 && rb.linearVelocity.y >= 0)
+            {
+                movementState = MovementState.OnWall;
+            }
+            else if (normal.x != 0 && rb.linearVelocity.y < 0)
             {
                 movementState = MovementState.WallDraging;
                 if (rb.linearVelocity.y < landSoundThreshold)
@@ -406,6 +476,14 @@ public class _PlayerMovement : MonoBehaviour
                 isGrounded = false;
                 _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", 2.5f, 0.3f);
             }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (movementState == MovementState.OnWall && rb.linearVelocity.y < -1 && collision.transform.CompareTag("Ground"))
+        {
+            movementState = MovementState.WallDraging;
         }
     }
 }

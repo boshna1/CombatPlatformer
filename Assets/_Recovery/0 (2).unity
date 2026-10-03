@@ -776,14 +776,14 @@ MonoBehaviour:
   hopModifierX: 0
   hopModifierY: 0
   knockbackFallOff: 0
-  wallJumpEffectTime: 0.2
+  wallJumpEffectTime: 1
   wallJumpCurrentTime: 0
-  wallJumpForce: 28
-  movementDamper: 18
+  wallJumpForce: 25
+  movementDamper: 10
   movementDampTime: 0
   defaultMovementDamper: 10
-  movementDampDuration: 0.1
-  defaultWallJumpForce: 28
+  movementDampDuration: 0.8
+  defaultWallJumpForce: 25
   move: {fileID: 3545029755709786502, guid: f39732d03cce79641a80a4e1aa9b4151, type: 3}
   jump: {fileID: -7321577769612836639, guid: f39732d03cce79641a80a4e1aa9b4151, type: 3}
   dash: {fileID: -1932930093133005710, guid: f39732d03cce79641a80a4e1aa9b4151, type: 3}
