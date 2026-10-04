@@ -868,10 +868,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_AudioManager
   sfxList:
-  - {fileID: 8300000, guid: d7aead6d0d2cbf047839542903180568, type: 3}
+  - {fileID: 8300000, guid: d72634e610d0d2542b7d5e62872c4bf3, type: 3}
   - {fileID: 8300000, guid: f032bc83d8136214089c4525ec0a282a, type: 3}
   - {fileID: 8300000, guid: 27f23ba670c40cd41b2c50a4ef1bcca3, type: 3}
-  - {fileID: 8300000, guid: 9650b37d4a7db0c44ae99fe034fb278c, type: 3}
+  - {fileID: 8300000, guid: 693ee4d0e78cfb743af1c0e13b48d2eb, type: 3}
+  - {fileID: 8300000, guid: 233f8feae2743ff4fa80673c2c74d992, type: 3}
+  - {fileID: 8300000, guid: 1e7bdc064b896af4f99d63fba0cbed3a, type: 3}
   musicList: []
   defaultPitch: 1.91
 --- !u!4 &684568872
