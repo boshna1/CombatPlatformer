@@ -4,6 +4,8 @@ public class _CustomGravity : MonoBehaviour
 {
     [SerializeField] float gravityScale;
     Rigidbody rb;
+
+    public bool isGravityEffected = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +21,11 @@ public class _CustomGravity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(Physics.gravity * gravityScale,ForceMode.Acceleration);
+        if (isGravityEffected)
+        {
+            rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
+        }
+        
+        
     }
 }

@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 669267446}
   - component: {fileID: 669267445}
   - component: {fileID: 669267444}
-  - component: {fileID: 669267453}
+  - component: {fileID: 669267443}
   - component: {fileID: 669267442}
   - component: {fileID: 669267451}
   - component: {fileID: 669267450}
@@ -594,6 +594,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &669267443
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669267441}
+  m_Material: {fileID: 13400000, guid: 15d7b939569cfa041bc9241b66e04a19, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &669267444
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -763,7 +786,6 @@ MonoBehaviour:
   movementDampTime: 0
   defaultMovementDamper: 10
   movementDampDuration: 0.1
-  coyoteTime: 0.15
   move: {fileID: 3545029755709786502, guid: f39732d03cce79641a80a4e1aa9b4151, type: 3}
   jump: {fileID: -7321577769612836639, guid: f39732d03cce79641a80a4e1aa9b4151, type: 3}
   dash: {fileID: -1932930093133005710, guid: f39732d03cce79641a80a4e1aa9b4151, type: 3}
@@ -816,27 +838,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_CustomGravity
   gravityScale: 5.8
   isGravityEffected: 1
---- !u!65 &669267453
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669267441}
-  m_Material: {fileID: 13400000, guid: 15d7b939569cfa041bc9241b66e04a19, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &684568870
 GameObject:
   m_ObjectHideFlags: 0

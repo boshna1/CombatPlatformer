@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -45,6 +46,7 @@ public class _PlayerMovement : MonoBehaviour
     public Vector2 _moveDirection;
 
     [Header("Player Dash Variables")]
+    public bool canDash;
     public float dashForceX;
     public float dashVelocityX;
     public float dashFallOffDuration;
@@ -56,6 +58,8 @@ public class _PlayerMovement : MonoBehaviour
     public float dashDistance;
 
     public float baseLungeDist;
+
+    public float dashCooldown;
 
     [Header("Player Knockback Variables")]
     public bool isKnockback;
@@ -91,13 +95,16 @@ public class _PlayerMovement : MonoBehaviour
     [Header("Player Wall Jump Variables")]
     public float wallJumpEffectTime;
     public float wallJumpCurrentTime;
-    public float wallJumpForce;
+    public Vector2 wallJumpForce;
+    public Vector2 defaultWallJumpForce;
     public float movementDamper;
     public float movementDampTime;
     public float defaultMovementDamper;
     public float movementDampDuration;
-    public float defaultWallJumpForce;
 
+    [Header("Coyote Time Variables")]
+
+    public float coyoteTime;
 
     [Header("Input Actions")]
 
@@ -130,9 +137,12 @@ public class _PlayerMovement : MonoBehaviour
 
     _AudioManager am;
 
+    _CustomGravity cg;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        cg = GetComponent<_CustomGravity>();
         pPointer = GetComponentInChildren<_PlayerPointer>();
         pi = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
@@ -146,23 +156,24 @@ public class _PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDashing)
+        
+        if (residueSpeedX != 0)
+        {
+            PassEnableDash(false);
+            residueSpeedX = Mathf.MoveTowards(residueSpeedX, 0, 1);
+            rb.linearVelocity = new Vector2(residueSpeedX, 0) + new Vector2(_moveDirection.x * moveSpeed, rb.linearVelocity.y);
+        }
+        if (isWallJumping)
+        {
+            WallJump();
+        }
+        else if (isDashing)
         {
             DashingFunction();
         }
         else if (isKnockback)
         {
             KnockBackFunction();
-        }
-        else if (residueSpeedX != 0)
-        {
-            PassEnableDash(false);
-            residueSpeedX = Mathf.MoveTowards(residueSpeedX, 0, 1);
-            rb.linearVelocity = new Vector2(residueSpeedX, 0) + new Vector2(_moveDirection.x * moveSpeed, rb.linearVelocity.y);
-        }
-        else if (isWallJumping)
-        {
-            WallJump();
         }
         else
         {
@@ -262,6 +273,7 @@ public class _PlayerMovement : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext obj)
     {
+        cg.isGravityEffected = true;
         if (movementState == MovementState.WallDraging || movementState == MovementState.OnWall)
         {
             isWallJumping = true;
@@ -276,8 +288,9 @@ public class _PlayerMovement : MonoBehaviour
 
     private void Dash(InputAction.CallbackContext obj)
     {
-        if (!isDashing)
+        if (!isDashing && canDash)
         {
+            cg.isGravityEffected = false;
             _AudioManager.Instance.PlaySoundAmbientPitch("Whoosh", 2.5f, 0.8f);
             PassEnableDash(true);
             dashVelocityX = _moveDirection.x * dashForceX;
@@ -286,6 +299,7 @@ public class _PlayerMovement : MonoBehaviour
             dashFallOffDuration = 2;
             dashFalloff = 10;
             dashDuration = 0.25f;
+            StartCoroutine(WaitCooldownDash(dashCooldown));
         }
     }
 
@@ -319,15 +333,16 @@ public class _PlayerMovement : MonoBehaviour
     public void DashingFunction()
     {
         dashTime += Time.fixedDeltaTime;
-        rb.linearVelocity = new Vector2(dashVelocityX, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(dashVelocityX, 0);
         if (dashForceX > dashFalloff)
         {
             dashVelocityX = Mathf.Lerp(dashVelocityX, 0, dashTime / dashFallOffDuration);
         }
         if (dashTime >= dashDuration)
         {
-            dashForceX = 15;
+            dashForceX = 35;
             isDashing = false;
+            cg.isGravityEffected = true;
             if (isLunging)
             {
                 isLunging = false;
@@ -367,8 +382,8 @@ public class _PlayerMovement : MonoBehaviour
     {
         wallJumpCurrentTime += Time.fixedDeltaTime;
         movementDampTime += Time.fixedDeltaTime;
-        rb.linearVelocity = new Vector2(normal.x * wallJumpForce + _moveDirection.x * moveSpeed * 1 / movementDamper, Mathf.Abs(rb.linearVelocity.y) + wallJumpForce / 12);
-        wallJumpForce = Mathf.Lerp(wallJumpForce, 8, wallJumpCurrentTime / wallJumpEffectTime);
+        rb.linearVelocity = new Vector2(normal.x * wallJumpForce.x + _moveDirection.x * moveSpeed * 1 / movementDamper, wallJumpForce.y);
+        wallJumpForce.x = Mathf.Lerp(wallJumpForce.x, 8, wallJumpCurrentTime / wallJumpEffectTime);
         movementDamper = Mathf.Lerp(movementDamper, 1, movementDampTime / movementDampDuration);
         if (wallJumpCurrentTime >= wallJumpEffectTime)
         {
@@ -476,6 +491,11 @@ public class _PlayerMovement : MonoBehaviour
                 isGrounded = false;
                 _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", 2.5f, 0.3f);
             }
+            if (normal.y == 1 && rb.linearVelocity.y <= 0)
+            {
+                cg.isGravityEffected = false;
+                StartCoroutine(CoyoteTime());
+            }
         }
     }
 
@@ -485,5 +505,19 @@ public class _PlayerMovement : MonoBehaviour
         {
             movementState = MovementState.WallDraging;
         }
+    }
+
+
+    IEnumerator WaitCooldownDash(float time)
+    {
+        canDash = false;
+        yield return new WaitForSeconds(time);
+        canDash = true;
+    }
+    
+    IEnumerator CoyoteTime()
+    {
+        yield return new WaitForSeconds(coyoteTime);
+        cg.isGravityEffected = true;
     }
 }
