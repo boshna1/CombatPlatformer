@@ -666,6 +666,7 @@ Transform:
   m_Children:
   - {fileID: 983066605}
   - {fileID: 527839280}
+  - {fileID: 879096209}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &669267447
@@ -706,6 +707,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0b0bc68f3928d4ebde183af4797f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_PlayerBaseClass
+  attack: {fileID: 0}
+  stateMovementRef: 0
+  stateWalkingRef: 0
 --- !u!114 &669267450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,6 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_PlayerMovement
   movementState: 0
+  walkingState: 0
   rb: {fileID: 0}
   moveSpeed: 7
   _sprintSpeed: 15
@@ -747,6 +752,7 @@ MonoBehaviour:
   isGrounded: 0
   isDashing: 0
   isLunging: 0
+  isSprinting: 0
   isWallJumping: 0
   jumpCount: 0
   maxJump: 2
@@ -1037,6 +1043,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &879096208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 879096209}
+  - component: {fileID: 879096210}
+  m_Layer: 0
+  m_Name: PlayerModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &879096209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879096208}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 669267446}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &879096210
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879096208}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4cd25815fc6c5674e9fb6429dc9c3774, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &983066602
 GameObject:
   m_ObjectHideFlags: 0

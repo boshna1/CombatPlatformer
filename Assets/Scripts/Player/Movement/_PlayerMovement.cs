@@ -10,14 +10,20 @@ public class _PlayerMovement : MonoBehaviour
     //Movement enum
     public enum MovementState
     {
-        Idle,
-        Walking,
-        Sprinting,
         WallDraging,
         Grounded,
 
         OnWall,
         Airborne
+    }
+
+    public enum WalkingState
+    {
+        Idle,
+        Walking,
+        Sprinting, 
+        Dashing
+
     }
 
     //player input direction enums
@@ -37,6 +43,7 @@ public class _PlayerMovement : MonoBehaviour
     [Header("Player General Movement Variables")]
     [Header("Current State")]
     public MovementState movementState;
+    public WalkingState walkingState;
 
     public Rigidbody rb;
     public float moveSpeed;
@@ -75,6 +82,7 @@ public class _PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public bool isDashing;
     public bool isLunging;
+    public bool isSprinting;
 
     public bool isWallJumping;
     bool enableDoubleJump = true;
