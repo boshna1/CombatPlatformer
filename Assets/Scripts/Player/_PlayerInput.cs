@@ -198,7 +198,7 @@ public partial class @_PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""766ccd11-b88b-42cb-ab48-3d2fa7c28e77"",
                     ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": ""Tap(duration=0.2,pressPoint=0.5)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Controller"",
                     ""action"": ""Move"",
@@ -292,28 +292,6 @@ public partial class @_PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8198a744-2127-4dbe-8189-817e53cfe887"",
-                    ""path"": ""<Joystick>/stick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fdb55ec4-8027-49c1-8bf4-ec0d2e43fc2a"",
-                    ""path"": ""<Joystick>/stick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -351,6 +329,16 @@ public partial class @_PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""devicePath"": ""<DualShockGamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<XRController>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<HID::Logitech Logitech Dual Action>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }
