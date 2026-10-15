@@ -1,9 +1,8 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
-using UnityEngine.EventSystems;
 
 public class _PlayerMovement : MonoBehaviour
 {
@@ -11,20 +10,14 @@ public class _PlayerMovement : MonoBehaviour
     //Movement enum
     public enum MovementState
     {
+        Idle,
+        Walking,
+        Sprinting,
         WallDraging,
         Grounded,
 
         OnWall,
         Airborne
-    }
-
-    public enum WalkingState
-    {
-        Idle,
-        Walking,
-        Sprinting, 
-        Dashing
-
     }
 
     //player input direction enums
@@ -44,7 +37,6 @@ public class _PlayerMovement : MonoBehaviour
     [Header("Player General Movement Variables")]
     [Header("Current State")]
     public MovementState movementState;
-    public WalkingState walkingState;
 
     public Rigidbody rb;
     public float moveSpeed;
@@ -83,7 +75,6 @@ public class _PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public bool isDashing;
     public bool isLunging;
-    public bool isSprinting;
 
     public bool isWallJumping;
     bool enableDoubleJump = true;
@@ -253,9 +244,9 @@ public class _PlayerMovement : MonoBehaviour
 
     public void OnControlsChanged(PlayerInput currentInput)
     {
-        if (currentInput.currentControlScheme == "Controller")
+        if (currentInput.currentControlScheme == "Gamepad")
         {
-            pi.SwitchCurrentControlScheme("Controller", Gamepad.current);
+            pi.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
         }
         else if (currentInput.currentControlScheme == "Keyboard")
         {
@@ -271,24 +262,10 @@ public class _PlayerMovement : MonoBehaviour
             switch (change)
             {
                 case InputDeviceChange.Added:
-                    Debug.Log("Added Controller");
-                    pi.SwitchCurrentControlScheme("Controller", Gamepad.current);
+                    Debug.Log("Added device");
                     break;
                 case InputDeviceChange.Removed:
-                    Debug.Log("Removed Controller");
-                    break;
-            }
-        }
-        else if (device is Keyboard)
-        {
-            switch (change)
-            {
-                case InputDeviceChange.Added:
-                    Debug.Log("Added Keyboard");
-                    pi.SwitchCurrentControlScheme("Keyboard", Keyboard.current);
-                    break;
-                case InputDeviceChange.Removed:
-                    Debug.Log("Removed Keyboard");
+                    Debug.Log("Removed device");
                     break;
             }
         }

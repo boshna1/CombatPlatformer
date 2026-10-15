@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class _InstakillObstacle : MonoBehaviour
 {
-
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player"))
         {
             Debug.Log("Touchinsta");
-            other.gameObject.GetComponent<_PlayerHP>().Instakill();
+            collision.gameObject.GetComponent<_PlayerHP>().Instakill();
         }
     }
 
