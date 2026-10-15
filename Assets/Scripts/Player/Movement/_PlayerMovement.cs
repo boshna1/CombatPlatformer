@@ -1,8 +1,9 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using UnityEngine.EventSystems;
 
 public class _PlayerMovement : MonoBehaviour
 {
@@ -252,9 +253,9 @@ public class _PlayerMovement : MonoBehaviour
 
     public void OnControlsChanged(PlayerInput currentInput)
     {
-        if (currentInput.currentControlScheme == "Gamepad")
+        if (currentInput.currentControlScheme == "Controller")
         {
-            pi.SwitchCurrentControlScheme("Gamepad", Gamepad.current);
+            pi.SwitchCurrentControlScheme("Controller", Gamepad.current);
         }
         else if (currentInput.currentControlScheme == "Keyboard")
         {
@@ -270,10 +271,24 @@ public class _PlayerMovement : MonoBehaviour
             switch (change)
             {
                 case InputDeviceChange.Added:
-                    Debug.Log("Added device");
+                    Debug.Log("Added Controller");
+                    pi.SwitchCurrentControlScheme("Controller", Gamepad.current);
                     break;
                 case InputDeviceChange.Removed:
-                    Debug.Log("Removed device");
+                    Debug.Log("Removed Controller");
+                    break;
+            }
+        }
+        else if (device is Keyboard)
+        {
+            switch (change)
+            {
+                case InputDeviceChange.Added:
+                    Debug.Log("Added Keyboard");
+                    pi.SwitchCurrentControlScheme("Keyboard", Keyboard.current);
+                    break;
+                case InputDeviceChange.Removed:
+                    Debug.Log("Removed Keyboard");
                     break;
             }
         }
