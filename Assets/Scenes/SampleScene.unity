@@ -3251,6 +3251,10 @@ PrefabInstance:
       propertyPath: Lens.OrthographicSize
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8126197437849119349, guid: 1aa3ac9ba19343641893dc7284203692, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
