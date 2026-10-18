@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.EventSystems;
-
+using Unity.Cinemachine;
 public class _PlayerMovement : MonoBehaviour
 {
     
@@ -53,6 +53,8 @@ public class _PlayerMovement : MonoBehaviour
     [SerializeField] float _defaultSpeed;
     public Vector2 _moveDirection;
 
+    [SerializeField] float _timeToStopSprint;
+
     [Header("Player Dash Variables")]
     public bool canDash;
     public float dashForceX;
@@ -84,6 +86,7 @@ public class _PlayerMovement : MonoBehaviour
     public bool isDashing;
     public bool isLunging;
     public bool isSprinting;
+    Coroutine _isSprint;
 
     public bool isWallJumping;
     bool enableDoubleJump = true;
@@ -147,6 +150,15 @@ public class _PlayerMovement : MonoBehaviour
     _AudioManager am;
 
     _CustomGravity cg;
+
+    [Header("Camera")]
+
+    [SerializeField] CinemachineCamera _defaultCam;
+    [SerializeField] CinemachineCamera _sprintCam;
+
+    [Header("Effects")]
+    [SerializeField] _EffectHandler EH;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -228,14 +240,19 @@ public class _PlayerMovement : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
+        CalculateDirections();
+        if (_isSprint != null)
+        {
+            StopCoroutine(_isSprint);
+        }
         _moveDirection = value.Get<Vector2>();
         if (_moveDirection != Vector2.zero)
-        {
+        {    
             pPointer.transform.position = _moveDirection + new Vector2(transform.position.x, transform.position.y);
         }
         else if (_moveDirection.x == 0)
         {
-            moveSpeed = _defaultSpeed;
+            _isSprint = StartCoroutine(DisableSprint());
         }
     }
 
@@ -244,10 +261,6 @@ public class _PlayerMovement : MonoBehaviour
         if (obj.performed)
         {
             moveSpeed = _sprintSpeed;
-        }
-        else
-        {
-            moveSpeed = _defaultSpeed;
         }
     }
 
@@ -303,8 +316,16 @@ public class _PlayerMovement : MonoBehaviour
         }
         else if (isGrounded || jumpCount < maxJump)
         {
+            
+            if (jumpCount > 0)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * 0.85f);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            }
             jumpCount++;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
         }
     }
@@ -371,6 +392,7 @@ public class _PlayerMovement : MonoBehaviour
                 isLunging = false;
             }
             residueSpeedX = dashVelocityX;
+            _isSprint = StartCoroutine(DisableSprint());
         }
     }
 
@@ -440,12 +462,12 @@ public class _PlayerMovement : MonoBehaviour
     {
         if (Mathf.Abs(_moveDirection.x) > 0.2f)
         {
-            if (_moveDirection.x < 0)
+            if (_moveDirection.x > 0)
             {
                 dirX = DirX.Left;
                 baseLungeDist = -baseLungeDist;
             }
-            else if (_moveDirection.x > 0)
+            else if (_moveDirection.x < 0)
             {
                 dirX = DirX.Right;
                 baseLungeDist = 0.6f;
@@ -542,5 +564,22 @@ public class _PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(coyoteTime);
         cg.isGravityEffected = true;
+    }
+
+    IEnumerator DisableSprint()
+    {
+        moveSpeed = _sprintSpeed;
+        ChangeCam(_sprintCam, 50);
+        EH.Effect(true, dirX);
+
+        yield return new WaitForSeconds(_timeToStopSprint);
+        EH.Effect(false);
+        ChangeCam(_sprintCam, -1);
+        moveSpeed = _defaultSpeed;
+    }
+
+    void ChangeCam(CinemachineCamera cam, int value) // 0 = default | -1 = sprint
+    {
+        cam.Priority.Value = value;
     }
 }

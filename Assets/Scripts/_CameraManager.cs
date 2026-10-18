@@ -32,6 +32,6 @@ public class _CameraManager : MonoBehaviour
         if (blended)
             cam.Priority.Value = 1;
         else
-            cam.Priority.Value = -1;
+            cam.Priority.Value = -2;
     }
 }
