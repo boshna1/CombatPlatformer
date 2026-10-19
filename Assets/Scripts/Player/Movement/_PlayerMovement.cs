@@ -241,6 +241,7 @@ public class _PlayerMovement : MonoBehaviour
     public void OnMove(InputValue value)
     {
         CalculateDirections();
+        EH.Transform(dirX);
         if (_isSprint != null)
         {
             StopCoroutine(_isSprint);
@@ -260,6 +261,8 @@ public class _PlayerMovement : MonoBehaviour
     {
         if (obj.performed)
         {
+            CalculateDirections();
+            EH.Effect(true, dirX);
             moveSpeed = _sprintSpeed;
         }
     }
@@ -464,13 +467,11 @@ public class _PlayerMovement : MonoBehaviour
         {
             if (_moveDirection.x > 0)
             {
-                dirX = DirX.Left;
-                baseLungeDist = -baseLungeDist;
+                dirX = DirX.Right;
             }
             else if (_moveDirection.x < 0)
             {
-                dirX = DirX.Right;
-                baseLungeDist = 0.6f;
+                dirX = DirX.Left;
             }
             else
             {
@@ -532,9 +533,18 @@ public class _PlayerMovement : MonoBehaviour
         {
             if (rb.linearVelocity.y != 0)
             {
+                if (movementState != MovementState.WallDraging)
+                {
+                    _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", 2.5f, 0.3f);
+                }
+                else
+                {
+                    _AudioManager.Instance.PlaySoundAmbientPitch("Wall_Jump", 2.5f, 0.3f);
+                }
                 movementState = MovementState.Airborne;
                 isGrounded = false;
-                _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", 2.5f, 0.3f);
+                
+                
             }
             if (normal.y == 1 && rb.linearVelocity.y <= 0)
             {
@@ -570,8 +580,6 @@ public class _PlayerMovement : MonoBehaviour
     {
         moveSpeed = _sprintSpeed;
         ChangeCam(_sprintCam, 50);
-        EH.Effect(true, dirX);
-
         yield return new WaitForSeconds(_timeToStopSprint);
         EH.Effect(false);
         ChangeCam(_sprintCam, -1);

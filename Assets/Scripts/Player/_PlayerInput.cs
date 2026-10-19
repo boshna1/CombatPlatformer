@@ -135,7 +135,7 @@ public partial class @_PlayerInput: IInputActionCollection2, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""MultiTap(tapTime=0.7,tapDelay=0.5,pressPoint=1.401298E-45)"",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [

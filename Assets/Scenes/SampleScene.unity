@@ -314,7 +314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!73398921 &251101727
 VFXRenderer:
   serializedVersion: 1
@@ -323,7 +323,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251101726}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1113,6 +1113,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 693ee4d0e78cfb743af1c0e13b48d2eb, type: 3}
   - {fileID: 8300000, guid: 233f8feae2743ff4fa80673c2c74d992, type: 3}
   - {fileID: 8300000, guid: 1e7bdc064b896af4f99d63fba0cbed3a, type: 3}
+  - {fileID: 8300000, guid: f592ee0681c4bf84b96829672cefba42, type: 3}
   musicList: []
   defaultPitch: 1.91
 --- !u!4 &684568872
@@ -3625,6 +3626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_EffectHandler
   effect: {fileID: 251101728}
+  _timeTillDisable: 0.15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
