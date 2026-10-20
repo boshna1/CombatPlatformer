@@ -5,9 +5,9 @@ using System.Collections;
 public class _Tagger : _EnemyBase
 { 
     [SerializeField] List<Transform> _patrolPositions;
-    int listIndex;
+    [SerializeField] int listIndex;
     Rigidbody rb;
-    int _moveDirection;
+    [SerializeField] int _moveDirection;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,23 +29,30 @@ public class _Tagger : _EnemyBase
 
     void GetDirection()
     {
-        _moveDirection = (int)(_patrolPositions[listIndex].transform.position - transform.position).magnitude;
         listIndex++;
         if (listIndex > _patrolPositions.Count - 1)
         {
             listIndex = 0;
         }
+        _moveDirection = Mathf.RoundToInt(((_patrolPositions[listIndex].transform.position - transform.position).normalized).x);
+        
+        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("TaggerPatrol"))
-        {
-            GetDirection();
-        }
         if (collision.transform.CompareTag("Player"))
         {
             //damage(base.damage);
+        }
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("TaggerPatrol"))
+        {
+            GetDirection();
         }
     }
 }

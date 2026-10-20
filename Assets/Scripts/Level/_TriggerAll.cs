@@ -34,4 +34,13 @@ public class _TriggerAll : MonoBehaviour
 
         }
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            TriggerAll();
+        }
+    }
 }
