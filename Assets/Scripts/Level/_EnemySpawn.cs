@@ -4,7 +4,7 @@ public class _EnemySpawn : _BaseTrigger
 {
     [SerializeField] _EnemyBase enemyToSpawn;
 
-    _EnemyBase _eref;
+    public _EnemyBase _eref;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,7 +19,7 @@ public class _EnemySpawn : _BaseTrigger
 
     public override void Trigger()
     {
-        if (_eref != null)
+        if (_eref == null)
         {
             _eref = Instantiate(enemyToSpawn, transform.position, Quaternion.identity, transform);
         }

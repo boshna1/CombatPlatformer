@@ -341,6 +341,11 @@ public partial class @_PlayerInput: IInputActionCollection2, IDisposable
                     ""devicePath"": ""<HID::Logitech Logitech Dual Action>"",
                     ""isOptional"": false,
                     ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Joystick>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
                 }
             ]
         }

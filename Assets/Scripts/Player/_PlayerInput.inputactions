@@ -255,6 +255,11 @@
                     "devicePath": "<HID::Logitech Logitech Dual Action>",
                     "isOptional": false,
                     "isOR": false
+                },
+                {
+                    "devicePath": "<Joystick>",
+                    "isOptional": false,
+                    "isOR": false
                 }
             ]
         }
