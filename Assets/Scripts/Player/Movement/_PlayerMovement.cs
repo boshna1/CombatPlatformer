@@ -270,7 +270,6 @@ public class _PlayerMovement : MonoBehaviour
         if (value.Get<Vector2>() != Vector2.zero)
         {    
             pPointer.transform.position = _moveDirection + new Vector2(transform.position.x, transform.position.y);
-            if (movementState == MovementState.Grounded)
             transform.localScale = new Vector3(_moveDirection.normalized.x, transform.localScale.y, transform.localScale.z);
         }
         else if (value.Get<Vector2>() == Vector2.zero)
@@ -563,6 +562,7 @@ public class _PlayerMovement : MonoBehaviour
                 _playerAnim.SetTrigger("ResetToIdle");
             }
         }
+        _playerAnim.ResetTrigger("Jump");
     }
 
     private void OnCollisionExit(Collision collision)
