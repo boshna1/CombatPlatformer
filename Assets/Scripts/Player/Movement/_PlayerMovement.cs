@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.EventSystems;
-
+using Unity.Cinemachine;
+using Unity.VisualScripting;
 public class _PlayerMovement : MonoBehaviour
 {
     
@@ -53,6 +54,8 @@ public class _PlayerMovement : MonoBehaviour
     [SerializeField] float _defaultSpeed;
     public Vector2 _moveDirection;
 
+    [SerializeField] float _timeToStopSprint;
+
     [Header("Player Dash Variables")]
     public bool canDash;
     public float dashForceX;
@@ -84,9 +87,12 @@ public class _PlayerMovement : MonoBehaviour
     public bool isDashing;
     public bool isLunging;
     public bool isSprinting;
+    Coroutine _isSprint;
 
     public bool isWallJumping;
     bool enableDoubleJump = true;
+
+    bool isMoveAnim;
 
     [Header("Player Jump Variables")]
     public int jumpCount = 0;
@@ -132,6 +138,7 @@ public class _PlayerMovement : MonoBehaviour
     Vector2 normal;
     _PlayerMovement pm;
     _PlayerPointer pPointer;
+    Animator _playerAnim;
 
 
     [Header("Sound")]
@@ -148,9 +155,22 @@ public class _PlayerMovement : MonoBehaviour
 
     _CustomGravity cg;
 
+    [Header("Camera")]
+
+    [SerializeField] CinemachineCamera _defaultCam;
+    [SerializeField] CinemachineCamera _sprintCam;
+
+    [Header("Effects")]
+    [SerializeField] _EffectHandler EH;
+
+    [Header("HUD")]
+    [SerializeField] _HUDManager HUD;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _playerAnim = GetComponentInChildren<Animator>();
         cg = GetComponent<_CustomGravity>();
         pPointer = GetComponentInChildren<_PlayerPointer>();
         pi = GetComponent<PlayerInput>();
@@ -196,6 +216,16 @@ public class _PlayerMovement : MonoBehaviour
         {
             rb.linearDamping = 0;
         }
+        if (rb.linearVelocity.y > 3 && movementState == MovementState.Airborne)
+        {
+            _playerAnim.SetTrigger("Fall");
+        }
+        if (_moveDirection.x != 0)
+            _playerAnim.SetBool("Moving", true);
+        else
+        {
+            _playerAnim.SetBool("Moving", false);
+        }
     }
 
     private void OnEnable()
@@ -228,26 +258,40 @@ public class _PlayerMovement : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
+        CalculateDirections();
+        EH.Transform(dirX);
+
+        if (_isSprint != null)
+        {
+            StopCoroutine(_isSprint);
+        }
         _moveDirection = value.Get<Vector2>();
-        if (_moveDirection != Vector2.zero)
-        {
+        
+        if (value.Get<Vector2>() != Vector2.zero)
+        {    
             pPointer.transform.position = _moveDirection + new Vector2(transform.position.x, transform.position.y);
+            if (movementState == MovementState.Grounded)
+            transform.localScale = new Vector3(_moveDirection.normalized.x, transform.localScale.y, transform.localScale.z);
         }
-        else if (_moveDirection.x == 0)
+        else if (value.Get<Vector2>() == Vector2.zero)
         {
-            moveSpeed = _defaultSpeed;
+            if (_isSprint != null)
+            {
+                _isSprint = StartCoroutine(DisableSprint());
+            }
+            
+            _playerAnim.SetTrigger("ResetToIdle");
         }
+        
     }
 
     public void OnSprint(InputAction.CallbackContext obj)
     {
         if (obj.performed)
         {
+            CalculateDirections();
+            EH.Effect(true, dirX);
             moveSpeed = _sprintSpeed;
-        }
-        else
-        {
-            moveSpeed = _defaultSpeed;
         }
     }
 
@@ -300,19 +344,32 @@ public class _PlayerMovement : MonoBehaviour
         if (movementState == MovementState.WallDraging || movementState == MovementState.OnWall)
         {
             isWallJumping = true;
+            _playerAnim.SetTrigger("Jump");
         }
         else if (isGrounded || jumpCount < maxJump)
         {
+            
+            if (jumpCount > 0)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * 0.85f);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            }
             jumpCount++;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
+            _playerAnim.SetBool("Grounded", false);
+            _playerAnim.SetTrigger("Jump");
         }
+        
     }
 
     private void Dash(InputAction.CallbackContext obj)
     {
         if (!isDashing && canDash)
         {
+            HUD.TriggerButton("buttonDash", dashCooldown);
             cg.isGravityEffected = false;
             _AudioManager.Instance.PlaySoundAmbientPitch("Whoosh", 2.5f, 0.8f);
             PassEnableDash(true);
@@ -346,6 +403,7 @@ public class _PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + y);
         isGrounded = false;
+        _playerAnim.SetBool("Grounded", false);
     }
 
     public Vector2 ReturnMoveDir()
@@ -371,6 +429,7 @@ public class _PlayerMovement : MonoBehaviour
                 isLunging = false;
             }
             residueSpeedX = dashVelocityX;
+            _isSprint = StartCoroutine(DisableSprint());
         }
     }
 
@@ -440,15 +499,13 @@ public class _PlayerMovement : MonoBehaviour
     {
         if (Mathf.Abs(_moveDirection.x) > 0.2f)
         {
-            if (_moveDirection.x < 0)
-            {
-                dirX = DirX.Left;
-                baseLungeDist = -baseLungeDist;
-            }
-            else if (_moveDirection.x > 0)
+            if (_moveDirection.x > 0)
             {
                 dirX = DirX.Right;
-                baseLungeDist = 0.6f;
+            }
+            else if (_moveDirection.x < 0)
+            {
+                dirX = DirX.Left;
             }
             else
             {
@@ -485,6 +542,7 @@ public class _PlayerMovement : MonoBehaviour
             if (normal.x != 0 && rb.linearVelocity.y >= 0)
             {
                 movementState = MovementState.OnWall;
+                _playerAnim.SetBool("Airborne", false);
             }
             else if (normal.x != 0 && rb.linearVelocity.y < 0)
             {
@@ -494,12 +552,15 @@ public class _PlayerMovement : MonoBehaviour
                     _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", 2.5f, 0.3f);
                 }
             }
-            else if (normal.y != -1)
+            else if (normal.y != -1 && movementState == MovementState.Airborne)
             {
                 _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", _AudioManager.Instance.defaultPitch, 0.3f);
                 movementState = MovementState.Grounded;
                 isGrounded = true;
+                _playerAnim.SetBool("Grounded", true);
+                _playerAnim.SetBool("Airborne", false);
                 jumpCount = 0;
+                _playerAnim.SetTrigger("ResetToIdle");
             }
         }
     }
@@ -510,9 +571,21 @@ public class _PlayerMovement : MonoBehaviour
         {
             if (rb.linearVelocity.y != 0)
             {
+                if (movementState != MovementState.WallDraging)
+                {
+                    _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", 2.5f, 0.3f);
+                }
+                else
+                {
+                    _AudioManager.Instance.PlaySoundAmbientPitch("Wall_Jump", 2.5f, 0.3f);
+                }
                 movementState = MovementState.Airborne;
+                _playerAnim.SetBool("Airborne",true);
                 isGrounded = false;
-                _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", 2.5f, 0.3f);
+                _playerAnim.SetBool("Grounded", false);
+
+
+
             }
             if (normal.y == 1 && rb.linearVelocity.y <= 0)
             {
@@ -542,5 +615,20 @@ public class _PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(coyoteTime);
         cg.isGravityEffected = true;
+    }
+
+    IEnumerator DisableSprint()
+    {
+        moveSpeed = _sprintSpeed;
+        ChangeCam(_sprintCam, 50);
+        yield return new WaitForSeconds(_timeToStopSprint);
+        EH.Effect(false);
+        ChangeCam(_sprintCam, -1);
+        moveSpeed = _defaultSpeed;
+    }
+
+    void ChangeCam(CinemachineCamera cam, int value) // 0 = default | -1 = sprint
+    {
+        cam.Priority.Value = value;
     }
 }

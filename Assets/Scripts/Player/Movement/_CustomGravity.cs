@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class _CustomGravity : MonoBehaviour
 {
-    [SerializeField] float gravityScale;
+    [SerializeField] public float gravityScale;
     Rigidbody rb;
 
     public bool isGravityEffected = true;
