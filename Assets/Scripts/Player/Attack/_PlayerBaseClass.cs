@@ -39,9 +39,13 @@ public class _PlayerBaseClass : MonoBehaviour
 
     Coroutine resetReference;
 
+    _AnimationHandler ah;
+    [SerializeField] _AnimationHandler.ClipType _class;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        ah = GetComponent<_AnimationHandler>();
         canAttack = true;
         _playerAnimator = GetComponentInChildren<Animator>();
         pPointer = GetComponentInChildren<_PlayerPointer>();
@@ -112,43 +116,25 @@ public class _PlayerBaseClass : MonoBehaviour
 
     void SetTrigger()
     {
-        _playerAnimator.ResetTrigger("ResetToIdle");
-        if (resetReference != null)
-        {
-            StopCoroutine(resetReference);
-            resetReference = null;
-        }  
         canAttack = false;
         //string WalkingState = pm.walkingState.ToString();
         Debug.Log(Trim(pm.dirX.ToString()));
         string FacingX = Trim(pm.dirX.ToString());
         string FacingY = Trim(pm.dirY.ToString());
         string MovementState = pm.movementState.ToString();
-        _playerAnimator.SetTrigger(FacingX + FacingY + MovementState + comboCountGrounded.ToString());
+        ah.LookUp(_class, FacingX + FacingY + MovementState + comboCountGrounded.ToString());
         comboCountGrounded++;
         if (comboCountGrounded > maxComboCountGrounded)
         {
             comboCountGrounded = 0;
         }
-        AnimatorClipInfo[] clipTime = _playerAnimator.GetCurrentAnimatorClipInfo(0);
-        _playerAnimator.ResetTrigger(FacingX + FacingY + MovementState + comboCountGrounded.ToString());
         
     }
 
     public void EnableAttack()
     {
         canAttack = true;
-        resetReference = StartCoroutine(ResetToIdle());
-    }
-
-    IEnumerator ResetToIdle()
-    {
-        yield return new WaitForSeconds(timeToIdle);
-        _playerAnimator.SetTrigger("ResetToIdle");
-        comboCountGrounded = 0;
-        
-        StopCoroutine(resetReference);
-        
 
     }
+
 }

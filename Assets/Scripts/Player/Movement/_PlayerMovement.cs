@@ -138,7 +138,6 @@ public class _PlayerMovement : MonoBehaviour
     Vector2 normal;
     _PlayerMovement pm;
     _PlayerPointer pPointer;
-    Animator _playerAnim;
 
 
     [Header("Sound")]
@@ -166,11 +165,13 @@ public class _PlayerMovement : MonoBehaviour
     [Header("HUD")]
     [SerializeField] _HUDManager HUD;
 
+    _AnimationHandler ah;
 
+    [SerializeField] _AnimationHandler.ClipType _class;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _playerAnim = GetComponentInChildren<Animator>();
+        ah = GetComponent<_AnimationHandler>();
         cg = GetComponent<_CustomGravity>();
         pPointer = GetComponentInChildren<_PlayerPointer>();
         pi = GetComponent<PlayerInput>();
@@ -216,16 +217,7 @@ public class _PlayerMovement : MonoBehaviour
         {
             rb.linearDamping = 0;
         }
-        if (rb.linearVelocity.y > -3 && movementState == MovementState.Airborne)
-        {
-            _playerAnim.SetTrigger("Fall");
-        }
-        if (_moveDirection.x != 0)
-            _playerAnim.SetBool("Moving", true);
-        else
-        {
-            _playerAnim.SetBool("Moving", false);
-        }
+
     }
 
     private void OnEnable()
@@ -270,7 +262,14 @@ public class _PlayerMovement : MonoBehaviour
             StopCoroutine(_isSprint);
         }
         _moveDirection = value.ReadValue<Vector2>();
-        
+        if (value.performed)
+        {
+            ah.LookUp(_class, "Run");
+        }
+        if (value.canceled)
+        {
+            ah.LookUp(_class, "PlayerIdle");
+        }
         if (value.ReadValue<Vector2>() != Vector2.zero)
         {    
             pPointer.transform.position = _moveDirection + new Vector2(transform.position.x, transform.position.y);
@@ -278,13 +277,14 @@ public class _PlayerMovement : MonoBehaviour
         }
         else if (value.ReadValue<Vector2>() == Vector2.zero)
         {
+            ah.LookUp(_class, "PlayerIdle");
             if (_isSprint != null)
             {
                 _isSprint = StartCoroutine(DisableSprint());
             }
             
-            _playerAnim.SetTrigger("ResetToIdle");
         }
+        
         
     }
 
@@ -347,7 +347,7 @@ public class _PlayerMovement : MonoBehaviour
         if (movementState == MovementState.WallDraging || movementState == MovementState.OnWall)
         {
             isWallJumping = true;
-            _playerAnim.SetTrigger("Jump");
+
         }
         else if (isGrounded || jumpCount < maxJump)
         {
@@ -362,8 +362,7 @@ public class _PlayerMovement : MonoBehaviour
             }
             jumpCount++;
             isGrounded = false;
-            _playerAnim.SetBool("Grounded", false);
-            _playerAnim.SetTrigger("Jump");
+
         }
         
     }
@@ -406,7 +405,7 @@ public class _PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + y);
         isGrounded = false;
-        _playerAnim.SetBool("Grounded", false);
+
     }
 
     public Vector2 ReturnMoveDir()
@@ -545,7 +544,7 @@ public class _PlayerMovement : MonoBehaviour
             if (normal.x != 0 && rb.linearVelocity.y >= 0)
             {
                 movementState = MovementState.OnWall;
-                _playerAnim.SetBool("Airborne", false);
+
             }
             else if (normal.x != 0 && rb.linearVelocity.y < 0)
             {
@@ -560,13 +559,10 @@ public class _PlayerMovement : MonoBehaviour
                 _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", _AudioManager.Instance.defaultPitch, 0.3f);
                 movementState = MovementState.Grounded;
                 isGrounded = true;
-                _playerAnim.SetBool("Grounded", true);
-                _playerAnim.SetBool("Airborne", false);
+
                 jumpCount = 0;
-                _playerAnim.SetTrigger("ResetToIdle");
             }
         }
-        _playerAnim.ResetTrigger("Jump");
     }
 
     private void OnCollisionExit(Collision collision)
@@ -584,9 +580,9 @@ public class _PlayerMovement : MonoBehaviour
                     _AudioManager.Instance.PlaySoundAmbientPitch("Wall_Jump", 2.5f, 0.3f);
                 }
                 movementState = MovementState.Airborne;
-                _playerAnim.SetBool("Airborne",true);
+         
                 isGrounded = false;
-                _playerAnim.SetBool("Grounded", false);
+
 
 
 
