@@ -216,7 +216,7 @@ public class _PlayerMovement : MonoBehaviour
         {
             rb.linearDamping = 0;
         }
-        if (rb.linearVelocity.y > 3 && movementState == MovementState.Airborne)
+        if (rb.linearVelocity.y > -3 && movementState == MovementState.Airborne)
         {
             _playerAnim.SetTrigger("Fall");
         }
@@ -239,6 +239,8 @@ public class _PlayerMovement : MonoBehaviour
         sprint.action.performed += OnSprint;
         InputSystem.onDeviceChange += OnDeviceChange;
         pi.onControlsChanged += OnControlsChanged;
+        move.action.performed += OnMove;
+        move.action.canceled += OnMove;
        
     }
 
@@ -254,9 +256,11 @@ public class _PlayerMovement : MonoBehaviour
         sprint.action.performed -= OnSprint;
         InputSystem.onDeviceChange -= OnDeviceChange;
         pi.onControlsChanged -= OnControlsChanged;
+        move.action.performed -= OnMove;
+        move.action.canceled -= OnMove;
     }
 
-    public void OnMove(InputValue value)
+    public void OnMove(InputAction.CallbackContext value)
     {
         CalculateDirections();
         EH.Transform(dirX);
@@ -265,14 +269,14 @@ public class _PlayerMovement : MonoBehaviour
         {
             StopCoroutine(_isSprint);
         }
-        _moveDirection = value.Get<Vector2>();
+        _moveDirection = value.ReadValue<Vector2>();
         
-        if (value.Get<Vector2>() != Vector2.zero)
+        if (value.ReadValue<Vector2>() != Vector2.zero)
         {    
             pPointer.transform.position = _moveDirection + new Vector2(transform.position.x, transform.position.y);
             transform.localScale = new Vector3(_moveDirection.normalized.x, transform.localScale.y, transform.localScale.z);
         }
-        else if (value.Get<Vector2>() == Vector2.zero)
+        else if (value.ReadValue<Vector2>() == Vector2.zero)
         {
             if (_isSprint != null)
             {

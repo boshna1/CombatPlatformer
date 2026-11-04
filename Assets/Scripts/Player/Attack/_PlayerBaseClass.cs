@@ -54,15 +54,14 @@ public class _PlayerBaseClass : MonoBehaviour
     private void OnEnable()
     {
         attack.action.Enable();
-        if (attack != null && attack.action != null)
         attack.action.performed += OnAttack;
     }
 
     private void OnDisable()
     {
         attack.action.Disable();
-        if (attack != null && attack.action != null)
-            attack.action.performed -= OnAttack;
+        attack.action.performed -= OnAttack;
+
 
     }
 
@@ -148,7 +147,6 @@ public class _PlayerBaseClass : MonoBehaviour
         _playerAnimator.SetTrigger("ResetToIdle");
         comboCountGrounded = 0;
         
-        resetReference = null;
         StopCoroutine(resetReference);
         
 

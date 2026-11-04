@@ -8387,6 +8387,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: _PlayerBase Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1600878554245967011, guid: 2e16a681b23853d4f9198fd90a1ff3b3, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600878554245967011, guid: 2e16a681b23853d4f9198fd90a1ff3b3, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2466754312697459832, guid: 2e16a681b23853d4f9198fd90a1ff3b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.35356
