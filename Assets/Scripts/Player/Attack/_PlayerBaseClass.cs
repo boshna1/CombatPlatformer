@@ -118,17 +118,16 @@ public class _PlayerBaseClass : MonoBehaviour
     {
         canAttack = false;
         //string WalkingState = pm.walkingState.ToString();
-        Debug.Log(Trim(pm.dirX.ToString()));
         string FacingX = Trim(pm.dirX.ToString());
         string FacingY = Trim(pm.dirY.ToString());
         string MovementState = pm.movementState.ToString();
         ah.LookUp(_class, FacingX + FacingY + MovementState + comboCountGrounded.ToString());
+        Debug.Log((_class, FacingX + FacingY + MovementState + comboCountGrounded.ToString()));
         comboCountGrounded++;
         if (comboCountGrounded > maxComboCountGrounded)
         {
             comboCountGrounded = 0;
         }
-        
     }
 
     public void EnableAttack()

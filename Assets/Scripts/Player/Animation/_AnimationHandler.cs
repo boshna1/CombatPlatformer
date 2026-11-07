@@ -17,7 +17,7 @@ public class _AnimationHandler : MonoBehaviour
     [SerializeField] List<AnimationClip> _spearAnimationClips;
     [SerializeField] List<AnimationClip> _bowAnimationClips;
 
-    [SerializeField] Animation _animator;
+    [SerializeField] public Animation _animator;
     [SerializeField] ClipType _currentClipType;
     string _currentClip;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -117,16 +117,16 @@ public class _AnimationHandler : MonoBehaviour
 
     public void CallAnimation(List<AnimationClip> list, string name)
     {
-        Debug.Log(name);
         foreach (AnimationClip clip in list)
         {
             if (clip.name == name && _currentClip != name)
             {
                 _currentClip = clip.name;
                 _animator.Play(clip.name);
-
+                
             }
         }
+        
     }
 
     IEnumerator TimeToIdle(float time)

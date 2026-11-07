@@ -166,6 +166,7 @@ public class _PlayerMovement : MonoBehaviour
     [SerializeField] _HUDManager HUD;
 
     _AnimationHandler ah;
+    float _elapsedTime;
 
     [SerializeField] _AnimationHandler.ClipType _class;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -186,7 +187,14 @@ public class _PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        if (movementState == MovementState.Grounded && walkingState == WalkingState.Idle)
+        {
+            _elapsedTime += Time.deltaTime;
+        }
+        else
+        {
+            _elapsedTime = 0;
+        }
         if (residueSpeedX != 0)
         {
             PassEnableDash(false);
@@ -217,7 +225,19 @@ public class _PlayerMovement : MonoBehaviour
         {
             rb.linearDamping = 0;
         }
-
+        if (rb.linearVelocity.y > 0 && movementState == MovementState.Airborne)
+        {
+            ah.LookUp(_class, "Jump");
+        }
+        else if (rb.linearVelocity.y < 0 && movementState == MovementState.Airborne)
+        {
+            ah.LookUp(_class,"Fall");
+        }
+        if (_elapsedTime > 5)
+        {
+            ah.LookUp(_class, "Idle2");
+            _elapsedTime = 0;
+        }
     }
 
     private void OnEnable()
@@ -552,6 +572,7 @@ public class _PlayerMovement : MonoBehaviour
                 if (rb.linearVelocity.y < landSoundThreshold)
                 {
                     _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", 2.5f, 0.3f);
+                    
                 }
             }
             else if (normal.y != -1 && movementState == MovementState.Airborne)
@@ -559,7 +580,7 @@ public class _PlayerMovement : MonoBehaviour
                 _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", _AudioManager.Instance.defaultPitch, 0.3f);
                 movementState = MovementState.Grounded;
                 isGrounded = true;
-
+                ah.LookUp(_class, "PlayerIdle");
                 jumpCount = 0;
             }
         }
