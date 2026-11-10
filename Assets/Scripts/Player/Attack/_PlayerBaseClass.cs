@@ -1,8 +1,12 @@
+using Mono.Cecil.Cil;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using static _PlayerMovement;
 
 public class _PlayerBaseClass : MonoBehaviour
 {
@@ -11,6 +15,16 @@ public class _PlayerBaseClass : MonoBehaviour
     {
         Idle,
         Attacking
+    }
+
+    public enum Combo
+    {
+        HorizontalGrounded,
+        HorizontalAirborne,
+        UpGrounded,
+        DownGrounded,
+        UpAirborne,
+        DownAirborne
     }
 
     [Header("Components")]
@@ -35,16 +49,24 @@ public class _PlayerBaseClass : MonoBehaviour
     string trimmedString;
     int comboCountGrounded;
     [SerializeField] float timeToIdle;
-    [SerializeField] int maxComboCountGrounded;
+
+    [SerializeField] int currentComboStep;
+    [SerializeField] int currentMaxCombo;
+    [SerializeField] Combo currentCombo;
+
+    Dictionary<Combo, int> _comboDictionary = new Dictionary<Combo, int>();
 
     Coroutine resetReference;
 
     _AnimationHandler ah;
+    _ComboValues cv;
     [SerializeField] _AnimationHandler.ClipType _class;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        cv = GetComponent<_ComboValues>();
+        _comboDictionary = cv._comboDictrionary;
         ah = GetComponent<_AnimationHandler>();
         canAttack = true;
         _playerAnimator = GetComponentInChildren<Animator>();
@@ -88,12 +110,11 @@ public class _PlayerBaseClass : MonoBehaviour
         {
             SetTrigger();
         }
-        
+
     }
 
     string Trim(string convert)
     {
-        Debug.Log(convert);
         if (convert.Equals("None"))
         {
             trimmedString = "";
@@ -104,14 +125,37 @@ public class _PlayerBaseClass : MonoBehaviour
         }
         else if (convert.Equals("Up") || convert.Equals("Down"))
         {
-            trimmedString = "Vertical";
+            return convert;
         }
         else if (!convert.Equals("Grounded") || !convert.Equals("Airborne"))
         {
             trimmedString = "";
         }
-        Debug.Log(trimmedString);
+
         return trimmedString;
+    }
+
+    void CheckString(string trimmedString)
+    {
+        if (trimmedString != currentCombo.ToString())
+        {
+            currentComboStep = 0;
+            currentCombo = Enum.Parse<Combo>(trimmedString);
+            Debug.Log(currentCombo);
+            currentMaxCombo = _comboDictionary[currentCombo];
+            ExecuteAttack(trimmedString);
+        }
+        else
+        {
+            ExecuteAttack(trimmedString);
+            currentComboStep++;
+            if (currentComboStep > currentMaxCombo)
+            {
+                currentComboStep = 0;
+            }
+
+        }
+
     }
 
     void SetTrigger()
@@ -121,14 +165,23 @@ public class _PlayerBaseClass : MonoBehaviour
         string FacingX = Trim(pm.dirX.ToString());
         string FacingY = Trim(pm.dirY.ToString());
         string MovementState = pm.movementState.ToString();
-        ah.LookUp(_class, FacingX + FacingY + MovementState + comboCountGrounded.ToString());
-        Debug.Log((_class, FacingX + FacingY + MovementState + comboCountGrounded.ToString()));
-        comboCountGrounded++;
-        if (comboCountGrounded > maxComboCountGrounded)
+        CheckString(FacingX + FacingY + MovementState);
+
+
+    }
+
+    void ExecuteAttack(string trimmedString)
+    {
+     if (!ah.LookUp(_class, trimmedString + currentComboStep.ToString()))
         {
-            comboCountGrounded = 0;
+            canAttack = true;
+        }
+        else
+        {
+            canAttack = false;
         }
     }
+
 
     public void EnableAttack()
     {

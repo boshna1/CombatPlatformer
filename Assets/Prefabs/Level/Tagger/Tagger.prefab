@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -6937291620872169539}
   m_Layer: 0
   m_Name: Tagger
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Tagger
   _maxHP: 100
+  _currentHP: 0
   _damage: 5
   _moveSpeed: 2.5
   _patrolPositions: []

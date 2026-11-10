@@ -93,29 +93,32 @@ public class _AnimationHandler : MonoBehaviour
     }
 
 
-    public void LookUp(ClipType type, string name)
+    public bool LookUp(ClipType type, string name)
     {
-        switch (type)
+        if (type == ClipType.Sword)
+                {
+                    return CallAnimation(_swordAnimationClips,"_" + type.ToString() + name);
+                    
+                }
+        if (type == ClipType.Spear)
+                {
+                    return CallAnimation(_spearAnimationClips, "_" + type.ToString() + name);
+                    
+                }
+        if (type == ClipType.Bow)
+                {
+                    return CallAnimation(_bowAnimationClips, "_" + type.ToString() + name);
+                    
+                }
+        else
         {
-            case ClipType.Sword:
-                {
-                    CallAnimation(_swordAnimationClips,"_" + type.ToString() + name);
-                    break;
-                }
-            case ClipType.Spear:
-                {
-                    CallAnimation(_spearAnimationClips, "_" + type.ToString() + name);
-                    break;
-                }
-            case ClipType.Bow:
-                {
-                    CallAnimation(_bowAnimationClips, "_" + type.ToString() + name);
-                    break;
-                }
+            return false;
         }
+        
     }
 
-    public void CallAnimation(List<AnimationClip> list, string name)
+
+    public bool CallAnimation(List<AnimationClip> list, string name)
     {
         foreach (AnimationClip clip in list)
         {
@@ -123,9 +126,10 @@ public class _AnimationHandler : MonoBehaviour
             {
                 _currentClip = clip.name;
                 _animator.Play(clip.name);
-                
+                return true;
             }
         }
+        return false;
         
     }
 
