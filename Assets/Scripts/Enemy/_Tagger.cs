@@ -11,6 +11,8 @@ public class _Tagger : _EnemyBase
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        base._meshRenderer = GetComponent<MeshRenderer>();
+        base._currentHP = base._maxHP;
         rb = GetComponent<Rigidbody>();
         _patrolPositions = transform.parent.GetComponent<_TaggerSpawner>()._patrolPositions;
         GetDirection();

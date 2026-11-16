@@ -187,6 +187,10 @@ public class _PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (transform.position.z != 2.39f)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 2.39f);
+        }
         if (movementState == MovementState.Grounded && walkingState == WalkingState.Idle)
         {
             _elapsedTime += Time.deltaTime;
@@ -580,7 +584,15 @@ public class _PlayerMovement : MonoBehaviour
                 _AudioManager.Instance.PlaySoundAmbientPitch("GroundLand", _AudioManager.Instance.defaultPitch, 0.3f);
                 movementState = MovementState.Grounded;
                 isGrounded = true;
-                ah.LookUp(_class, "PlayerIdle");
+                if (_moveDirection.x == 0)
+                {
+                    ah.LookUp(_class, "PlayerIdle");
+                }
+                if (_moveDirection.x != 0)
+                {
+                    ah.LookUp(_class, "Run");
+                }
+                
                 jumpCount = 0;
             }
         }

@@ -4,12 +4,14 @@ using UnityEngine;
 [RequireComponent (typeof(_CustomGravity))]
 public class _FallingObstacle : _BaseTrigger
 {
-    [SerializeField] float _fallingScale;
+    [SerializeField] protected float _fallingScale;
 
-    [SerializeField] float _timeToFall;
-    [SerializeField] float _timeToDestroy;
-    Vector3 _defaultPos;
-    Vector3 _defaultAngles;
+    [SerializeField] protected float _timeToFall;
+    [SerializeField] protected float _timeToDestroy;
+    protected Vector3 _defaultPos;
+    protected Vector3 _defaultAngles;
+
+    protected Vector2 _normal;
 
     private void Start()
     {
@@ -34,8 +36,11 @@ public class _FallingObstacle : _BaseTrigger
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        if (collision.transform.CompareTag("Player"))
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            _normal = contact.normal;
+        }
+        if (collision.transform.CompareTag("Player") && _normal.y == -1)
         {
             StartCoroutine(WaitRespawn());
         }
@@ -45,7 +50,7 @@ public class _FallingObstacle : _BaseTrigger
         }
     }
 
-    IEnumerator WaitRespawn()
+    public override IEnumerator WaitRespawn()
     {
         GetComponent<MeshRenderer>().enabled = false;
         transform.position = _defaultPos;
@@ -59,7 +64,7 @@ public class _FallingObstacle : _BaseTrigger
 
     }
 
-    IEnumerator HitGround()
+    public override IEnumerator HitGround()
     {
         yield return new WaitForSeconds(_timeToDestroy);
         GetComponent<MeshRenderer>().enabled = true;

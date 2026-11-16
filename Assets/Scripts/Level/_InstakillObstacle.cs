@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class _InstakillObstacle : MonoBehaviour
 {
-
+    [SerializeField] bool _allContacts;
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.transform.CompareTag("Player"))
         {
             Debug.Log("Touchinsta");

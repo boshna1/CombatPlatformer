@@ -1,19 +1,21 @@
+using System.Collections;
 using UnityEngine;
 
 public class _EnemyBase : MonoBehaviour
 {
-    [SerializeField] float _maxHP;
+    [SerializeField] public float _maxHP;
     public float _currentHP;
 
     [SerializeField] protected float _damage;
 
     [SerializeField] protected float _moveSpeed;
-    MeshRenderer _renderer;
+    [SerializeField] public MeshRenderer _meshRenderer;
+    [SerializeField] Material _damageMat;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _currentHP = _maxHP;
-        _renderer = GetComponent<MeshRenderer>();
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -24,14 +26,21 @@ public class _EnemyBase : MonoBehaviour
 
     public void TakeDamage()
     {
-        Color tempColor = _renderer.material.color;
-        _renderer.material.color = Color.red;
+        StartCoroutine(BufferMat());
         if (_currentHP <= 0)
         {
-            this.enabled = false;
+            gameObject.SetActive(false);
         }
-        _renderer.material.color = tempColor;
+        
     }
 
+    IEnumerator BufferMat()
+    {
+        Material tempMat = _meshRenderer.material;
+        _meshRenderer.material = _damageMat;
+        yield return new WaitForSeconds(0.2f);
+        _meshRenderer.material = tempMat;
+        
+    }
     
 }

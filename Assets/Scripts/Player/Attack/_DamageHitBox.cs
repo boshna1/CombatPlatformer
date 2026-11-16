@@ -12,7 +12,7 @@ public class _DamageHitBox : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(TryGetComponent<_PlayerBaseClass>(out _PlayerBaseClass comp))
+        if(!transform.parent.TryGetComponent<_EnemyBase>(out _EnemyBase comp))
         {
             _ignoreTags.Add("Player");
         }

@@ -1,4 +1,4 @@
-using Mono.Cecil.Cil;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -53,6 +53,7 @@ public class _PlayerBaseClass : MonoBehaviour
     [SerializeField] int currentComboStep;
     [SerializeField] int currentMaxCombo;
     [SerializeField] Combo currentCombo;
+    [SerializeField] public AttackState _attackState;
 
     Dictionary<Combo, int> _comboDictionary = new Dictionary<Combo, int>();
 
@@ -160,7 +161,6 @@ public class _PlayerBaseClass : MonoBehaviour
 
     void SetTrigger()
     {
-        canAttack = false;
         //string WalkingState = pm.walkingState.ToString();
         string FacingX = Trim(pm.dirX.ToString());
         string FacingY = Trim(pm.dirY.ToString());
@@ -172,13 +172,14 @@ public class _PlayerBaseClass : MonoBehaviour
 
     void ExecuteAttack(string trimmedString)
     {
-     if (!ah.LookUp(_class, trimmedString + currentComboStep.ToString()))
+        if (!ah.LookUp(_class, trimmedString + currentComboStep.ToString()))
         {
             canAttack = true;
         }
         else
         {
             canAttack = false;
+            _attackState = AttackState.Attacking;
         }
     }
 
@@ -186,7 +187,7 @@ public class _PlayerBaseClass : MonoBehaviour
     public void EnableAttack()
     {
         canAttack = true;
-
+        _attackState = AttackState.Idle;
     }
 
 }

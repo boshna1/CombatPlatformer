@@ -13,19 +13,18 @@ public class _EnemySpawn : _BaseTrigger
 
     // Update is called once per frame
     void Update()
-    {
-        
+    { 
     }
 
     public override void Trigger()
     {
-        if (_eref == null)
+        if (_eref != null)
         {
+            Destroy(_eref.gameObject);
             _eref = Instantiate(enemyToSpawn, transform.position, Quaternion.identity, transform);
         }
         else
         {
-            Destroy(_eref);
             _eref = Instantiate(enemyToSpawn, transform.position, Quaternion.identity, transform);
         }
     }

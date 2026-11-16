@@ -498,6 +498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &115529489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -712,6 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &186392773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -931,6 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &273133166 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -985,7 +988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2466754312697459832, guid: 2e16a681b23853d4f9198fd90a1ff3b3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.09
+      value: 2.39
       objectReference: {fileID: 0}
     - target: {fileID: 2466754312697459832, guid: 2e16a681b23853d4f9198fd90a1ff3b3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1634,7 +1637,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14371791, y: 0, z: 0, w: 0.9896188}
-  m_LocalPosition: {x: -208.52, y: 8.719999, z: -7.91}
+  m_LocalPosition: {x: -208.52, y: 8.719999, z: -7.6099997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2063,8 +2066,8 @@ Transform:
   m_GameObject: {fileID: 419323445}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -133.71292, y: 13.2312, z: 1.9566257}
-  m_LocalScale: {x: 1, y: 8.3024, z: 1}
+  m_LocalPosition: {x: -133.71292, y: 18.8701, z: 1.9566257}
+  m_LocalScale: {x: 1, y: 19.58038, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2372,6 +2375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &423371620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -2869,8 +2873,8 @@ Transform:
   m_GameObject: {fileID: 619143458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -108.78291, y: 31.8621, z: 1.9566257}
-  m_LocalScale: {x: 1, y: 8.0643, z: 1}
+  m_LocalPosition: {x: -108.78291, y: 36.3722, z: 1.9566257}
+  m_LocalScale: {x: 1, y: 17.084219, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3022,6 +3026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &632479275 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -3221,6 +3226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!54 &656219209
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3564,6 +3570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &731329728 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -3712,6 +3719,160 @@ MonoBehaviour:
   Texture2D: {fileID: 0}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _tiling: {x: 5, y: 5}
+--- !u!1 &768543906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 768543912}
+  - component: {fileID: 768543911}
+  - component: {fileID: 768543910}
+  - component: {fileID: 768543909}
+  - component: {fileID: 768543908}
+  - component: {fileID: 768543907}
+  m_Layer: 0
+  m_Name: Trigger1 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &768543907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768543906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cac32a0c18733cf4781e1946ef1452e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Trigger
+  _trigger: {fileID: 0}
+--- !u!54 &768543908
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768543906}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &768543909
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768543906}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &768543910
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768543906}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7e64726907418dc43973fb1c97c20d82, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &768543911
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768543906}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &768543912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768543906}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -155.03, y: 28.15, z: 1.9566257}
+  m_LocalScale: {x: 1, y: 19.58038, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &808485494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3863,6 +4024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &808485501 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -4042,6 +4204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!1001 &830387325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4201,6 +4364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!1 &830615002
 GameObject:
   m_ObjectHideFlags: 0
@@ -4448,7 +4612,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dash
+  m_Text: 'Dash
+
+    RB'
 --- !u!222 &835798650
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4733,6 +4899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!114 &850591828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5169,6 +5336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!1001 &933483592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5328,6 +5496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!1 &952560931
 GameObject:
   m_ObjectHideFlags: 0
@@ -5892,8 +6061,8 @@ Transform:
   m_GameObject: {fileID: 1096398596}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -182.58862, y: 0, z: 3.2566257}
-  m_LocalScale: {x: 175.54591, y: 1, z: 3}
+  m_LocalPosition: {x: -182.58862, y: -15.7529, z: 3.2566257}
+  m_LocalScale: {x: 175.54591, y: 32.5058, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -5913,6 +6082,194 @@ MonoBehaviour:
   Texture2D: {fileID: 0}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _tiling: {x: 0, y: 0}
+--- !u!1 &1130988726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1130988735}
+  - component: {fileID: 1130988734}
+  - component: {fileID: 1130988733}
+  - component: {fileID: 1130988732}
+  - component: {fileID: 1130988731}
+  - component: {fileID: 1130988729}
+  - component: {fileID: 1130988728}
+  - component: {fileID: 1130988736}
+  m_Layer: 0
+  m_Name: FallingObj (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!64 &1130988728
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130988726}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6402532953415861574, guid: 4fa7170950e19d9429405db2b158d91c, type: 3}
+--- !u!114 &1130988729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130988726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cd8e9120ca682348888e91c46e1e2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_MaterialOverride
+  Texture2D: {fileID: 0}
+  _color: {r: 1, g: 0, b: 0, a: 1}
+  _tiling: {x: 0, y: 0}
+--- !u!54 &1130988731
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130988726}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 120
+  m_CollisionDetection: 0
+--- !u!114 &1130988732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130988726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae4c66c9e361914d89074eb78957936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_CustomGravity
+  gravityScale: 0
+  isGravityEffected: 1
+--- !u!23 &1130988733
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130988726}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 54e9f2c801d722a4380f27249a546ef5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1130988734
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130988726}
+  m_Mesh: {fileID: -6402532953415861574, guid: 4fa7170950e19d9429405db2b158d91c, type: 3}
+--- !u!4 &1130988735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130988726}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.6854206, z: -0, w: 0.7281473}
+  m_LocalPosition: {x: -145.2, y: 17.49, z: 1.79}
+  m_LocalScale: {x: 56.278, y: 56.278, z: 403.23346}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -86.537, z: 0}
+--- !u!114 &1130988736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130988726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd3b4e6eabbd6b4092f8206884830c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_FallingGround
+  _fallingScale: 7
+  _timeToFall: 0.2
+  _timeToDestroy: 1
 --- !u!1 &1181051980
 GameObject:
   m_ObjectHideFlags: 0
@@ -6237,6 +6594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1212898882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -6621,6 +6979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1327226150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -6707,6 +7066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1329667066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -7161,6 +7521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1354441150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -7320,6 +7681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1358075943 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -7448,8 +7810,8 @@ Transform:
   m_GameObject: {fileID: 1396937267}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -200.4372, y: 2.5361, z: 2.2166257}
-  m_LocalScale: {x: 1, y: 3.4521, z: 1}
+  m_LocalPosition: {x: -200.4372, y: 6.6784, z: 2.2166257}
+  m_LocalScale: {x: 1, y: 11.736794, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -7560,6 +7922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1415486410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -8028,6 +8391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1485236072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -8272,6 +8636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1536526490 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -9355,6 +9720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1688383195 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -10105,6 +10471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!4 &1835741229 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1290000de05f9fb49ad78323785e816d, type: 3}
@@ -10233,6 +10600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!54 &1874347894
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11031,6 +11399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!1 &1975226924
 GameObject:
   m_ObjectHideFlags: 0
@@ -12270,6 +12639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
 --- !u!54 &2021572114
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12869,6 +13239,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff3dc607f9541d468c0e06e2033c9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_InstakillObstacle
+  _allContacts: 0
+--- !u!114 &7461506796002550276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653117438581200377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8b5e8ed54576b48840a66318e44d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_EnemyBase
+  _maxHP: 100
+  _currentHP: 0
+  _damage: 20
+  _moveSpeed: 6
+  _meshRenderer: {fileID: 0}
+  _damageMat: {fileID: 2100000, guid: 7e64726907418dc43973fb1c97c20d82, type: 2}
 --- !u!23 &7615527741456488202
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12947,6 +13336,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2674024154065730898}
     m_Modifications:
+    - target: {fileID: 7543009571249571933, guid: f4d9373119a8ada46811f999abc2be65, type: 3}
+      propertyPath: _damageMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 7e64726907418dc43973fb1c97c20d82, type: 2}
+    - target: {fileID: 8515921162406813949, guid: f4d9373119a8ada46811f999abc2be65, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d2ca23ec8107b624cb63c2eeaf029f52, type: 2}
     - target: {fileID: 8586742752326966441, guid: f4d9373119a8ada46811f999abc2be65, type: 3}
       propertyPath: m_Name
       value: Tagger
@@ -13010,6 +13407,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8586742752326966441, guid: f4d9373119a8ada46811f999abc2be65, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7461506796002550269}
+    - targetCorrespondingSourceObject: {fileID: 8586742752326966441, guid: f4d9373119a8ada46811f999abc2be65, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7461506796002550276}
   m_SourcePrefab: {fileID: 100100000, guid: f4d9373119a8ada46811f999abc2be65, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -13027,11 +13427,13 @@ SceneRoots:
   - {fileID: 1831054022}
   - {fileID: 32343047}
   - {fileID: 850591823}
+  - {fileID: 1130988735}
   - {fileID: 656219215}
   - {fileID: 2021572120}
   - {fileID: 1874347900}
   - {fileID: 1538256711}
   - {fileID: 419323449}
+  - {fileID: 768543912}
   - {fileID: 619143464}
   - {fileID: 2674024154065730898}
   - {fileID: 631219609}
