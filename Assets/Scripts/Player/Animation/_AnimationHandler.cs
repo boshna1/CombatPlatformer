@@ -122,11 +122,16 @@ public class _AnimationHandler : MonoBehaviour
     {
         foreach (AnimationClip clip in list)
         {
-            if (clip.name == name && _currentClip != name)
+            if (clip.name == name)
             {
-                _currentClip = clip.name;
-                _animator.Play(clip.name);
-                return true;
+                if (_currentClip != name || !_animator.IsPlaying(name))
+                {
+                    _currentClip = clip.name;
+                    _animator.Play(clip.name);
+                    Debug.Log(clip.name);
+                    return true;
+                }
+                return false;
             }
         }
         return false;

@@ -150,6 +150,9 @@ public class _PlayerMovement : MonoBehaviour
 
     public DirY dirY;
 
+    float dirXfloat;
+    float dirYfloat;
+
     _AudioManager am;
 
     _CustomGravity cg;
@@ -278,28 +281,30 @@ public class _PlayerMovement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext value)
     {
-        CalculateDirections();
-        EH.Transform(dirX);
+        
+        
 
         if (_isSprint != null)
         {
             StopCoroutine(_isSprint);
         }
         _moveDirection = value.ReadValue<Vector2>();
-        if (value.performed)
+        CalculateDirections();
+        EH.Transform(dirX);
+        if (value.performed && movementState == MovementState.Grounded)
         {
             ah.LookUp(_class, "Run");
         }
-        if (value.canceled)
+        if (value.canceled && movementState == MovementState.Grounded)
         {
             ah.LookUp(_class, "PlayerIdle");
         }
         if (value.ReadValue<Vector2>() != Vector2.zero)
         {    
             pPointer.transform.position = _moveDirection + new Vector2(transform.position.x, transform.position.y);
-            transform.localScale = new Vector3(_moveDirection.normalized.x, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(Mathf.Sign(_moveDirection.x) * 1, transform.localScale.y, transform.localScale.z);
         }
-        else if (value.ReadValue<Vector2>() == Vector2.zero)
+        else if (value.ReadValue<Vector2>() == Vector2.zero && movementState == MovementState.Grounded)
         {
             ah.LookUp(_class, "PlayerIdle");
             if (_isSprint != null)
@@ -399,7 +404,7 @@ public class _PlayerMovement : MonoBehaviour
             cg.isGravityEffected = false;
             _AudioManager.Instance.PlaySoundAmbientPitch("Whoosh", 2.5f, 0.8f);
             PassEnableDash(true);
-            dashVelocityX = _moveDirection.x * dashForceX;
+            dashVelocityX = dirXfloat * dashForceX;
             dashTime = 0;
             isDashing = true;
             dashFallOffDuration = 2;
@@ -523,36 +528,42 @@ public class _PlayerMovement : MonoBehaviour
 
     public void CalculateDirections()
     {
-        if (Mathf.Abs(_moveDirection.x) > 0.2f)
+        if (Mathf.Abs(_moveDirection.x) > 0.4f)
         {
             if (_moveDirection.x > 0)
             {
                 dirX = DirX.Right;
+                dirXfloat = 1;
             }
             else if (_moveDirection.x < 0)
             {
                 dirX = DirX.Left;
+                dirXfloat = -1;
             }
             else
             {
                 dirX = DirX.None;
+                dirXfloat = 0;
             }
         }
-        if (Mathf.Abs(_moveDirection.y) > 0.2f)
+        if (Mathf.Abs(_moveDirection.y) > 0.4f)
         {
             if (_moveDirection.y < 0)
             {
                 dirY = DirY.Down;
+                dirYfloat = 1;
             }
             else if (_moveDirection.y > 0)
             {
                 dirY = DirY.Up;
+                dirYfloat = -1;
             }
 
         }
         else
         {
             dirY = DirY.None;
+            dirYfloat = 0;
         }
     }
 
@@ -600,6 +611,7 @@ public class _PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+        normal = Vector2.zero;
         if (collision.transform.tag == "Ground")
         {
             if (rb.linearVelocity.y != 0)
